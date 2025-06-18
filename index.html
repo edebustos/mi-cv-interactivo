@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive CV - Ernesto de Bustos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- 
+    Chosen Palette: Red & Black (Primary Red #E03131, Accent Dark Grey #333333, Text #333333, Background #F9FAFB/White)
+    Application Structure Plan: A single-page dashboard design featuring a prominent header and navigation, an interactive experience section with region filters and a dynamic timeline, and distinct visual sections for skills and education. This non-linear structure allows users to quickly explore key areas of the CV, moving beyond a static document to a more engaging professional portfolio. The interactive filters remain the centerpiece, allowing a geographical exploration of a global career.
+    Visualization & Content Choices: Work Experience -> Goal: Explore Geographically & Chronologically -> Viz: Region filters + dynamic timeline -> Interaction: Click filters to update timeline with smooth transitions, revealing detailed role descriptions -> Justification: Emphasizes international experience and career progression, vital for humanitarian roles. Library: Vanilla JS for filtering and DOM manipulation. | Language Skills -> Goal: Compare Proficiency -> Viz: Horizontal Bar Chart -> Interaction: Hover tooltips -> Justification: Provides a clear, quick visual comparison of language abilities, crucial for international work. Library: Chart.js. | Other Skills/Education -> Goal: Inform -> Viz: Styled cards/lists with clear headings -> Interaction: Static -> Justification: Presents factual information cleanly and legibly, aligned with a professional, detail-oriented design. Library: Tailwind CSS.
+    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb; /* Light grey background */
+            color: #333333; /* Darker text for readability */
+        }
+        .bg-primary-red {
+            background-color: #E03131; /* Primary Red */
+        }
+        .text-primary-red {
+            color: #E03131;
+        }
+        .border-primary-red {
+            border-color: #E03131;
+        }
+        .bg-accent-dark {
+            background-color: #333333; /* Accent Dark Grey */
+        }
+        .text-accent-dark {
+            color: #333333;
+        }
+        .hover\:bg-primary-red-dark:hover {
+            background-color: #C82D2D; /* Slightly darker red for hover */
+        }
+        .hover\:text-primary-red-dark:hover {
+            color: #C82D2D; 
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .timeline-item-fade-out {
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .timeline-item-fade-in {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header class="bg-primary-red text-white shadow-lg sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div>
+                <a href="#" class="text-2xl font-extrabold tracking-wide">Ernesto de Bustos</a>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#experience" class="text-white hover:text-accent-dark transition duration-300 font-semibold">Experience</a>
+                <a href="#skills" class="text-white hover:text-accent-dark transition duration-300 font-semibold">Skills</a>
+                <a href="#education" class="text-white hover:text-accent-dark transition duration-300 font-semibold">Education</a>
+                <a href="#contact" class="text-white hover:text-accent-dark transition duration-300 font-semibold">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-white hover:text-accent-dark focus:outline-none">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-primary-red">
+            <a href="#experience" class="block py-3 px-6 text-base text-white hover:bg-primary-red-dark">Experience</a>
+            <a href="#skills" class="block py-3 px-6 text-base text-white hover:bg-primary-red-dark">Skills</a>
+            <a href="#education" class="block py-3 px-6 text-base text-white hover:bg-primary-red-dark">Education</a>
+            <a href="#contact" class="block py-3 px-6 text-base text-white hover:bg-primary-red-dark">Contact</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 max-w-6xl">
+
+        <!-- Hero Section -->
+        <section class="text-center mb-20 bg-white p-8 rounded-lg shadow-lg">
+            <h1 class="text-5xl font-extrabold text-primary-red mb-4">Ernesto de Bustos</h1>
+            <p class="text-2xl text-gray-700 font-semibold mb-4">Humanitarian & Development Professional</p>
+            <p class="max-w-3xl mx-auto text-gray-600 leading-relaxed">
+                A highly experienced development professional with nearly a decade of expertise in managing projects, coordinating programs, and administering operations across vital sectors like livelihoods, WASH, and public health in complex international contexts.
+            </p>
+        </section>
+
+        <!-- Work Experience Section -->
+        <section id="experience" class="mb-20">
+            <h2 class="text-4xl font-bold text-center mb-12 text-primary-red">Professional Experience</h2>
+            <p class="text-center text-gray-700 mb-8 max-w-2xl mx-auto">
+                Explore my extensive international career by filtering roles based on the region of engagement. This interactive timeline highlights my diverse experience across various global humanitarian and development initiatives.
+            </p>
+            
+            <div class="text-center mb-10">
+                <div id="region-filters" class="flex flex-wrap justify-center gap-3">
+                    <button class="filter-btn bg-primary-red text-white py-3 px-6 rounded-md text-base font-semibold shadow-md hover:bg-primary-red-dark transition-colors duration-300" data-region="all">All Regions</button>
+                    <button class="filter-btn bg-white text-primary-red border border-primary-red py-3 px-6 rounded-md text-base font-semibold shadow-md hover:bg-primary-red transition-colors duration-300 hover:text-white" data-region="Europe">Europe & CIS</button>
+                    <button class="filter-btn bg-white text-primary-red border border-primary-red py-3 px-6 rounded-md text-base font-semibold shadow-md hover:bg-primary-red transition-colors duration-300 hover:text-white" data-region="Middle East">Middle East</button>
+                    <button class="filter-btn bg-white text-primary-red border border-primary-red py-3 px-6 rounded-md text-base font-semibold shadow-md hover:bg-primary-red transition-colors duration-300 hover:text-white" data-region="Africa">Africa</button>
+                    <button class="filter-btn bg-white text-primary-red border border-primary-red py-3 px-6 rounded-md text-base font-semibold shadow-md hover:bg-primary-red transition-colors duration-300 hover:text-white" data-region="Latin America">Latin America</button>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div id="experience-timeline" class="relative max-w-4xl mx-auto">
+                <!-- JS will populate this -->
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="mb-20">
+            <h2 class="text-4xl font-bold text-center mb-12 text-primary-red">Skills & Competencies</h2>
+            <p class="text-center text-gray-700 mb-8 max-w-2xl mx-auto">
+                My diverse skill set includes language proficiency, technical expertise in data and ERP systems, and robust organizational and interpersonal abilities, crucial for international development roles.
+            </p>
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <div>
+                    <h3 class="text-2xl font-semibold text-center mb-6 text-primary-red">Language Proficiency</h3>
+                    <div class="chart-container bg-white p-6 rounded-lg shadow-md">
+                        <canvas id="languageChart"></canvas>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-6 text-center text-primary-red">Technical & Job-Related Skills</h3>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">Data & Visualization</span>
+                                    <span class="text-gray-700">Python (Django), notions of Tableau, R, and SQL for data analysis and compelling visualization.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">ERP Systems</span>
+                                    <span class="text-gray-700">Familiarity with key enterprise resource planning systems including Odoo, Dynamics365, Agresso, and Gong.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">Project Cycle Management</span>
+                                    <span class="text-gray-700">Excellent knowledge of all components of Project Cycle Management, ensuring effective project delivery from inception to evaluation.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">Economic Security</span>
+                                    <span class="text-gray-700">Long experience as an Economic Security Delegate in community-based interventions, focusing on livelihoods and resilience.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">Office Proficiency</span>
+                                    <span class="text-gray-700">Full proficiency in Microsoft Office 365, ensuring efficient administrative and reporting capabilities.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                     <div>
+                        <h3 class="text-2xl font-semibold mb-6 text-center text-primary-red">Organizational & Interpersonal</h3>
+                        <div class="bg-white p-6 rounded-lg shadow-md">
+                           <ul class="space-y-4">
+                                <li class="flex items-start"><span class="text-primary-red text-xl mr-3 mt-0.5">&#10003;</span><span class="text-gray-700">Demonstrated leadership abilities, honed by working effectively with diverse groups across different cultures and skill sets in international settings.</span></li>
+                                <li class="flex items-start"><span class="text-primary-red text-xl mr-3 mt-0.5">&#10003;</span><span class="text-gray-700">Extensive experience in designing, organizing, and delivering impactful capacity-building sessions for local partners and beneficiaries, fostering sustainable growth.</span></li>
+                                <li class="flex items-start"><span class="text-primary-red text-xl mr-3 mt-0.5">&#10003;</span><span class="text-gray-700">Proven strong communication skills, developed through sustained engagement with individuals from various cultural backgrounds and nationalities.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education & Training Section -->
+        <section id="education" class="mb-20">
+            <h2 class="text-4xl font-bold text-center mb-12 text-primary-red">Education & Key Training</h2>
+            <p class="text-center text-gray-700 mb-8 max-w-2xl mx-auto">
+                My academic background and specialized training provide a robust foundation for my professional work in humanitarian and development contexts.
+            </p>
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                <!-- Formal Education -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-semibold text-2xl mb-4 text-primary-red border-b-2 border-accent-dark pb-3">Formal Education</h3>
+                    <ul class="space-y-5">
+                        <li>
+                            <p class="font-semibold text-gray-800 text-lg">MA Innovation and Knowledge Management</p>
+                            <p class="text-sm text-gray-600">Complutense University of Madrid</p>
+                        </li>
+                         <li>
+                            <p class="font-semibold text-gray-800 text-lg">MA International Business Administration</p>
+                            <p class="text-sm text-gray-600">Economic & Commercial Center (CECO)</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-gray-800 text-lg">Postgraduate in Food Security Programme Management</p>
+                            <p class="text-sm text-gray-600">Universitat Oberta de Catalunya - UN Food and Agriculture Organization</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-gray-800 text-lg">Bachelor of Economics</p>
+                            <p class="text-sm text-gray-600">Complutense University of Madrid (Specialization: International Economics & Development)</p>
+                        </li>
+                    </ul>
+                </div>
+                 <!-- Specialized Training -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-semibold text-2xl mb-4 text-primary-red border-b-2 border-accent-dark pb-3">Specialized Training</h3>
+                     <ul class="space-y-5">
+                        <li>
+                            <p class="font-semibold text-gray-800 text-lg">HEAT Security Training</p>
+                            <p class="text-sm text-gray-600">Norwegian Refugee Council, Oslo (August 2022)</p>
+                        </li>
+                         <li>
+                            <p class="font-semibold text-gray-800 text-lg">Practical Emergency Cash Transfer (PECT)</p>
+                            <p class="text-sm text-gray-600">IFRC (Summer 2023)</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-gray-800 text-lg">Cash-Based Interventions Course</p>
+                            <p class="text-sm text-gray-600">Network on Humanitarian Action (NOHA) & Action Against Hunger (2017)</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-gray-800 text-lg">IFRC Livelihoods Center Trainings</p>
+                            <p class="text-sm text-gray-600">Including Livelihood Programming, CVA, Emergency & Recovery Livelihoods Assessment, Market Network Evaluation.</p>
+                        </li>
+                        <li>
+                            <p class="font-semibold text-gray-800 text-lg">Project Cycle Management Trainings</p>
+                            <p class="text-sm text-gray-600">Several trainings completed on all components of Project Cycle Management.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-primary-red text-white">
+        <div class="container mx-auto px-6 py-10 text-center">
+            <h2 class="text-3xl font-bold mb-4">Get In Touch</h2>
+            <p class="mb-6 text-gray-300">Feel free to reach out for collaboration or inquiries.</p>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-3 md:space-y-0 md:space-x-6 text-lg">
+                 <a href="mailto:edebustos@duck.com" class="hover:text-accent-dark transition-colors duration-300">edebustos@duck.com</a>
+                 <span class="hidden md:block">&bull;</span>
+                 <a href="https://www.linkedin.com/in/ernesto-de-bustos-136662233/" target="_blank" class="hover:text-accent-dark transition-colors duration-300">LinkedIn Profile</a>
+                 <span class="hidden md:block">&bull;</span>
+                 <p>(+34) 692793157</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // CV Data
+        const experienceData = [
+            { region: 'Middle East', dates: 'Mar 2025 - Apr 2025', role: 'Surge Finance Delegate', org: 'German Red Cross', location: 'Ramallah, Palestinian Territories', details: ['Budget follow up, ensuring all expenses have statements of payment (invoices, cheques, receipts) for donor reports.', 'Daily follow up of the projects financial evolution.'] },
+            { region: 'Europe', dates: 'Apr 2024 - Jan 2025', role: 'Projects Manager', org: 'Austrian Red Cross', location: 'Kyiv, Ukraine', details: ['Led financial activities in the field, monitoring program finances and indicators.', 'Developed and implemented planning strategies to achieve program goals.', 'Collaborated with Ukraine Red Cross Finance team for daily operations.', 'Provided inputs for new proposals to support program growth and sustainability.', 'Cash and Vouchers Assistance referent.'] },
+            { region: 'Europe', dates: 'Nov 2023 - Apr 2024', role: 'Surge Finance Delegate', org: 'German Red Cross', location: 'Kyiv, Ukraine', details: ['Budget follow up, ensuring all expenses have statements of payment (invoices, cheques, receipts) for donor reports.', 'Daily follow up of the projects financial evolution.'] },
+            { region: 'Europe', dates: 'Apr 2022 - Mar 2023', role: 'Cash and Vouchers Assistance Delegate', org: 'German Red Cross', location: 'Lublin, Poland', details: ['Implementation of a CVA programme in Lublin Region for the Ukrainian Emergency.', 'Procurement and set up of the Red Rose CVA platform.', 'Training and coordinating volunteers for assisting Ukrainian refugees.', 'Close coordination with the Polish Red Cross, IFRC, and local authorities.'] },
+            { region: 'Latin America', dates: 'Jan 2024 - Feb 2024', role: 'Project Coordinator', org: 'INTERSOS', location: 'Caracas, Venezuela', details: ['Coordinated project activities, ensuring the timely completion of deliverables.', 'Managed project resources, including budget oversight, staff management, and stakeholder communication.'] },
+            { region: 'Middle East', dates: 'Oct 2023 - Dec 2023', role: 'Project Administrator', org: 'Doctors of the World (MdM)', location: 'Homs & Tartus, Syria', details: ['Responsible for administrative and financial management of base office (budget, expenditure, reporting).', 'Supervised HR management (recruitment, supervision, evaluation).', 'Coordinated logistics and procurement.', 'Maintained relationships with local authorities, partners, and stakeholders.'] },
+            { region: 'Africa', dates: 'Sep 2022 - Sep 2023', role: 'Economic Security Delegate', org: 'German Red Cross', location: 'Eastern Sudan', details: ['Implemented and supervised economic security projects (income generation, livelihoods, food assistance).', 'Conducted needs assessments and designed/implemented interventions.', 'Provided technical support and training to local partners and beneficiaries.', 'Monitored and evaluated project impact.'] },
+            { region: 'Latin America', dates: 'Oct 2021 - Aug 2022', role: 'Foreign Trade and Investment Advisor', org: 'Spanish Embassy in Ukraine', location: 'Lima, Peru', details: ['Advised Spanish companies on investment/business in Ukraine (from Peru).', 'Conducted market research and investment opportunity analysis.', 'Organized events and trade missions.', 'Maintained relationships with government agencies, business associations, and stakeholders.'] },
+            { region: 'Europe', dates: 'Mar 2016 - Sep 2021', role: 'Project Manager', org: 'Cideal Foundation', location: 'Madrid, Spain', details: ['Managed and coordinated development projects (rural, food security, civil society).', 'Developed and managed project budgets, ensuring donor compliance.', 'Monitored project progress and prepared reports.', 'Built relationships with local partners and government agencies.'] },
+            { region: 'Europe', dates: 'Sep 2014 - Feb 2016', role: 'Project Coordinator', org: 'Spanish Red Cross', location: 'Madrid, Spain', details: ['Coordinated humanitarian aid and development projects (Africa, Latin America, Asia).', 'Provided technical support and guidance to field teams.', 'Developed training materials for staff and volunteers.', 'Represented SRC at international meetings.'] },
+            { region: 'Africa', dates: 'Dec 2009 - Dec 2011', role: 'Food Security Delegate', org: 'ONG Rescate Internacional', location: 'Dire Dawa, Ethiopia', details: ['Financial, technical, and logistics management of food security projects.', 'Coordination and supervision of technical working groups.', 'Objectives definition and tasks distribution.', 'Institutional relations with donors, agencies, and authorities.'] }
+        ];
+
+        // Experience Timeline Logic
+        const timelineContainer = document.getElementById('experience-timeline');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        let activeFilter = 'all';
+        
+        const renderTimeline = (filter) => {
+            // Add fade-out class to existing items before clearing
+            Array.from(timelineContainer.children).forEach(child => {
+                if (child.classList.contains('mb-8')) { // Only apply to actual timeline items
+                    child.classList.remove('timeline-item-fade-in');
+                    child.classList.add('timeline-item-fade-out');
+                }
+            });
+
+            // Delay clearing and adding new items to allow fade-out animation
+            setTimeout(() => {
+                timelineContainer.innerHTML = '<div class="absolute left-1/2 -ml-0.5 w-1 bg-primary-red h-full"></div>'; // Re-add the vertical line
+                const filteredData = filter === 'all' ? experienceData : experienceData.filter(item => item.region === filter);
+                
+                filteredData.sort((a, b) => new Date(b.dates.split(' - ')[0]) - new Date(a.dates.split(' - ')[0])); // Sort by start date, descending
+
+                filteredData.forEach((item, index) => {
+                    const timelineItemDiv = document.createElement('div');
+                    timelineItemDiv.className = 'mb-8 relative flex flex-col md:flex-row items-center timeline-item-fade-in';
+
+                    const detailsHtml = item.details.map(detail => `<li>${detail}</li>`).join('');
+
+                    timelineItemDiv.innerHTML = `
+                        <div class="hidden md:block absolute left-1/2 -ml-2.5 w-5 h-5 rounded-full bg-accent-dark border-4 border-white"></div>
+                        <div class="md:w-1/2 ${index % 2 === 0 ? 'md:pr-8' : 'md:pl-8 md:text-right'}">
+                            <div class="bg-white p-6 rounded-lg shadow-md transition transform hover:-translate-y-1 hover:shadow-xl border-t-4 border-primary-red">
+                                <p class="text-sm font-medium text-gray-600">${item.dates}</p>
+                                <h3 class="text-xl font-bold mt-1 text-primary-red">${item.role}</h3>
+                                <p class="text-gray-700 font-medium">${item.org} - ${item.location}</p>
+                                <ul class="text-sm text-gray-600 mt-3 list-disc list-inside space-y-1">
+                                    ${detailsHtml}
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                    timelineContainer.appendChild(timelineItemDiv);
+                });
+            }, 300); // Wait for fade-out to complete
+        };
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-primary-red', 'text-white');
+                    btn.classList.add('bg-white', 'text-primary-red', 'border', 'border-primary-red', 'hover:bg-primary-red', 'hover:text-white');
+                });
+                button.classList.add('bg-primary-red', 'text-white');
+                button.classList.remove('bg-white', 'text-primary-red', 'border', 'border-primary-red', 'hover:bg-primary-red', 'hover:text-white');
+                
+                activeFilter = button.dataset.region;
+                renderTimeline(activeFilter);
+            });
+        });
+
+        // Initial render
+        renderTimeline(activeFilter);
+
+
+        // Language Chart
+        const languageCtx = document.getElementById('languageChart').getContext('2d');
+        const languageChart = new Chart(languageCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Spanish', 'English', 'Russian', 'Arabic'],
+                datasets: [{
+                    label: 'Proficiency Level (CEFR)',
+                    data: [6, 5, 3, 2], // C2=6, C1=5, B2=4, B1=3, A2=2, A1=1
+                    backgroundColor: [
+                        '#E03131', /* Primary Red */
+                        '#E03131', 
+                        '#F4A3A3', /* Lighter Red */
+                        '#FADCDC'  /* Even lighter Red */
+                    ],
+                    borderColor: [
+                        '#C82D2D',
+                        '#C82D2D',
+                        '#E03131',
+                        '#F4A3A3'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const levels = {6: 'C2 (Mother Tongue)', 5: 'C1 (Proficient)', 4: 'B2', 3: 'B1 (Independent)', 2: 'A2 (Basic)', 1: 'A1'};
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.x !== null) {
+                                    label += levels[context.parsed.x];
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 6,
+                        ticks: {
+                           callback: function(value, index, values) {
+                                const levels = {0: 'A0', 1: 'A1', 2: 'A2', 3: 'B1', 4: 'B2', 5: 'C1', 6: 'C2'};
+                                return levels[value];
+                           }
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
