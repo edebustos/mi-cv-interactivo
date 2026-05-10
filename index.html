@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive CV - Ernesto de Bustos</title>
+    <title>Ernesto de Bustos | Humanitarian Finance & Operations Manager</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- 
+    <!--
     Chosen Palette: Red & Black (Primary Red #E03131, Accent Dark Grey #333333, Text #333333, Background #F9FAFB/White)
     Application Structure Plan: A single-page dashboard design featuring a prominent header and navigation, an interactive experience section with region filters and a dynamic timeline, and distinct visual sections for skills and education. This non-linear structure allows users to quickly explore key areas of the CV, moving beyond a static document to a more engaging professional portfolio. The interactive filters remain the centerpiece, allowing a geographical exploration of a global career. A new modal system is introduced to display a philosophical cover letter, providing deeper insight into professional values without disrupting the main CV flow.
     Visualization & Content Choices: Work Experience -> Goal: Explore Geographically & Chronologically -> Viz: Region filters + dynamic timeline -> Interaction: Click filters to update timeline with smooth transitions, revealing detailed role descriptions -> Justification: Emphasizes international experience and career progression, vital for humanitarian roles. Library: Vanilla JS for filtering and DOM manipulation. | Language Skills -> Goal: Compare Proficiency -> Viz: Horizontal Bar Chart -> Interaction: Hover tooltips -> Justification: Provides a clear, quick visual comparison of language abilities, crucial for international work. Library: Chart.js. | Other Skills/Education -> Goal: Inform -> Viz: Styled cards/lists with clear headings -> Interaction: Static -> Justification: Presents factual information cleanly and legibly, aligned with a professional, detail-oriented design. Library: Tailwind CSS. | Cover Letter (New Section) -> Goal: Convey professional values and mission alignment -> Viz: Modal text overlay -> Interaction: Click button to open/close modal -> Justification: Offers a dedicated space for qualitative, narrative content that reflects deeper professional philosophy, separate from specific job applications, enhancing personal branding. Library: HTML/CSS for modal structure, Vanilla JS for control.
@@ -38,7 +38,7 @@
             background-color: #C82D2D; /* Slightly darker red for hover */
         }
         .hover\:text-primary-red-dark:hover {
-            color: #C82D2D; 
+            color: #C82D2D;
         }
         .chart-container {
             position: relative;
@@ -142,24 +142,34 @@
     <main class="container mx-auto px-6 py-12 max-w-6xl">
 
         <!-- Hero Section -->
-        <section class="text-center mb-20 bg-white p-8 rounded-lg shadow-lg">
+        <section class="text-center mb-20 bg-white p-10 rounded-lg shadow-lg">
             <h1 class="text-5xl font-extrabold text-primary-red mb-4">Ernesto de Bustos</h1>
-            <p class="text-2xl text-gray-700 font-semibold mb-4">Humanitarian & Development Professional</p>
-            <p class="max-w-3xl mx-auto text-gray-600 leading-relaxed mb-6">
-                As a development professional with a specific academic background, I have nearly ten years of relevant experience and expertise working in the development sector, assuming key roles such as Project Manager, Project Coordinator, and Administrator in the different sectors of livelihoods, WASH, and public health.
-            </p>
-            <button id="open-cover-letter-modal" class="bg-primary-red text-white py-3 px-6 rounded-md text-base font-semibold shadow-md hover:bg-primary-red-dark transition-colors duration-300">
-                View My Professional Values
+            <p class="text-2xl text-gray-700 font-semibold mb-6">Humanitarian Finance & Operations Manager</p>
+            <div class="max-w-4xl mx-auto text-left text-gray-700 leading-relaxed space-y-4 text-lg">
+                <p>Humanitarian finance and operations professional with 15+ years of experience managing multi-country humanitarian and development programmes across Ukraine, Sudan, Syria, Venezuela, Colombia, Ethiopia and Peru.</p>
+                <p>Extensive experience within the Red Cross Movement and international NGOs leading financial management, donor compliance, budget monitoring, CVA operations, field coordination, partner support and emergency response under ECHO and institutional donor frameworks.</p>
+                <p>Strong background combining humanitarian finance, programme support, operational coordination and field-level decision-making in complex and conflict-affected environments.</p>
+            </div>
+            <div class="mt-8 flex flex-wrap justify-center gap-3">
+                <span class="bg-primary-red text-white px-4 py-2 rounded-full text-sm font-semibold">Humanitarian Finance</span>
+                <span class="bg-primary-red text-white px-4 py-2 rounded-full text-sm font-semibold">Emergency Response</span>
+                <span class="bg-primary-red text-white px-4 py-2 rounded-full text-sm font-semibold">Ukraine Response</span>
+                <span class="bg-primary-red text-white px-4 py-2 rounded-full text-sm font-semibold">CVA Programming</span>
+                <span class="bg-primary-red text-white px-4 py-2 rounded-full text-sm font-semibold">Donor Compliance</span>
+                <span class="bg-primary-red text-white px-4 py-2 rounded-full text-sm font-semibold">Budget Management</span>
+            </div>
+            <button id="open-cover-letter-modal" class="mt-8 bg-primary-red text-white py-3 px-6 rounded-md text-base font-semibold shadow-md hover:bg-primary-red-dark transition-colors duration-300">
+                Professional Profile & Humanitarian Approach
             </button>
         </section>
 
         <!-- Work Experience Section -->
         <section id="experience" class="mb-20">
             <h2 class="text-4xl font-bold text-center mb-12 text-primary-red">Professional Experience</h2>
-            <p class="text-center text-gray-700 mb-8 max-w-2xl mx-auto">
-                This section outlines my extensive international career. Use the filters to explore my experience by region, providing insight into my work across various global humanitarian and development initiatives. Each entry details my responsibilities and achievements in that role.
+            <p class="text-center text-gray-700 mb-8 max-w-3xl mx-auto">
+                International humanitarian experience across emergency response, humanitarian finance, donor compliance, CVA programming, operational coordination and programme management in conflict and post-conflict environments. Extensive field exposure with Red Cross Movement operations and international NGOs across Europe, Middle East, Africa and Latin America.
             </p>
-            
+
             <div class="text-center mb-10">
                 <div id="region-filters" class="flex flex-wrap justify-center gap-3">
                     <button class="filter-btn bg-primary-red text-white py-3 px-6 rounded-md text-base font-semibold shadow-md hover:bg-primary-red-dark transition-colors duration-300" data-region="all">All Regions</button>
@@ -191,42 +201,56 @@
                 </div>
                 <div class="grid grid-cols-1 gap-8">
                     <div>
-                        <h3 class="text-2xl font-semibold mb-6 text-center text-primary-red">Technical & Job-Related Skills</h3>
+                        <h3 class="text-2xl font-semibold mb-6 text-center text-primary-red">Technical & Finance Competencies</h3>
                         <div class="bg-white p-6 rounded-lg shadow-md">
                             <ul class="space-y-4">
-                                <li class="flex items-start">
-                                    <span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">Data & Visualization</span>
-                                    <span class="text-gray-700">Python for visualization with Django. Notions of Tableau, R, and SQL.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">ERP Systems</span>
-                                    <span class="text-gray-700">Familiar with Odoo, Dynamics365, Agresso, and Gong.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">Project Cycle Management</span>
-                                    <span class="text-gray-700">Excellent knowledge of all components of Project Cycle Management.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">Economic Security</span>
-                                    <span class="text-gray-700">Long experience working as an Economic Security Delegate in community-based interventions.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">Office Proficiency</span>
-                                    <span class="text-gray-700">Full proficiency in Microsoft Office 365.</span>
-                                </li>
+                                <li class="flex items-start"><span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">Humanitarian Finance</span><span class="text-gray-700">Budget monitoring, forecasting, donor compliance, treasury management, cost allocation, liquidity planning, audit preparedness and financial reporting.</span></li>
+                                <li class="flex items-start"><span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">ERP Systems</span><span class="text-gray-700">Experience with Dynamics 365, Agresso, Odoo, FundsPro and humanitarian financial systems.</span></li>
+                                <li class="flex items-start"><span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">CVA Programming</span><span class="text-gray-700">Implementation and operational support of Cash & Voucher Assistance programmes including RedRose platform deployment.</span></li>
+                                <li class="flex items-start"><span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">Digital & Data</span><span class="text-gray-700">Power BI (PL-300 in progress), advanced Excel (MOS-211 in progress), data visualization and reporting automation.</span></li>
+                                <li class="flex items-start"><span class="bg-accent-dark text-white text-xs font-semibold px-3 py-1 rounded-full mr-3 mt-1 inline-block">Programme Management</span><span class="text-gray-700">Project Cycle Management, proposal development, partner capacity strengthening and operational coordination.</span></li>
                             </ul>
                         </div>
                     </div>
                      <div>
-                        <h3 class="text-2xl font-semibold mb-6 text-center text-primary-red">Organizational & Interpersonal</h3>
+                        <h3 class="text-2xl font-semibold mb-6 text-center text-primary-red">Leadership & Operational Skills</h3>
                         <div class="bg-white p-6 rounded-lg shadow-md">
                            <ul class="space-y-4">
-                                <li class="flex items-start"><span class="text-primary-red text-xl mr-3 mt-0.5">&#10003;</span><span class="text-gray-700">Leadership abilities obtained by working with multiple groups with different skills and cultures in international contexts.</span></li>
-                                <li class="flex items-start"><span class="text-primary-red text-xl mr-3 mt-0.5">&#10003;</span><span class="text-gray-700">Long experience in organizing capacity building sessions for local partners and beneficiaries.</span></li>
-                                <li class="flex items-start"><span class="text-primary-red text-xl mr-3 mt-0.5">&#10003;</span><span class="text-gray-700">Good communication skills gained through a long experience working with people of different cultures and nationalities.</span></li>
+                                <li class="flex items-start"><span class="text-primary-red text-xl mr-3 mt-0.5">&#10003;</span><span class="text-gray-700">Led multicultural teams and coordinated operations in complex humanitarian and conflict-affected environments.</span></li>
+                                <li class="flex items-start"><span class="text-primary-red text-xl mr-3 mt-0.5">&#10003;</span><span class="text-gray-700">Supported strategic decision-making through financial analysis, budget follow-up and operational reporting.</span></li>
+                                <li class="flex items-start"><span class="text-primary-red text-xl mr-3 mt-0.5">&#10003;</span><span class="text-gray-700">Strong coordination skills with local partners, Red Cross National Societies, donors and humanitarian stakeholders.</span></li>
+                                <li class="flex items-start"><span class="text-primary-red text-xl mr-3 mt-0.5">&#10003;</span><span class="text-gray-700">Extensive experience delivering capacity-building sessions and supporting partner financial compliance.</span></li>
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Digital Skills Section -->
+        <section class="mb-20">
+            <h2 class="text-4xl font-bold text-center mb-12 text-primary-red">Digital & Analytical Skills</h2>
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-semibold text-2xl mb-4 text-primary-red border-b-2 border-accent-dark pb-3">Data & Reporting</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li>• Power BI (PL-300 certification in progress)</li>
+                        <li>• Advanced Excel (MOS-211 certification in progress)</li>
+                        <li>• Financial dashboards and reporting automation</li>
+                        <li>• Data visualization and analytical reporting</li>
+                        <li>• Humanitarian operational reporting</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="font-semibold text-2xl mb-4 text-primary-red border-b-2 border-accent-dark pb-3">Systems & Platforms</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li>• Dynamics 365</li>
+                        <li>• Agresso</li>
+                        <li>• Odoo</li>
+                        <li>• FundsPro</li>
+                        <li>• RedRose CVA platform</li>
+                        <li>• Microsoft Office 365</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -310,15 +334,15 @@
     <div id="cover-letter-modal" class="modal hidden">
         <div class="modal-content text-gray-800">
             <span class="close-button" id="close-cover-letter-modal">&times;</span>
-            <h2 class="text-3xl font-bold text-primary-red mb-6 text-center">My Professional Values</h2>
+            <h2 class="text-3xl font-bold text-primary-red mb-6 text-center">Professional Profile & Humanitarian Approach</h2>
             <p class="mb-4 leading-relaxed">
                 Dear Hiring Manager,
             </p>
             <p class="mb-4 leading-relaxed">
-                I am writing to express my profound interest in contributing to Mines Advisory Group (MAG) and am eager to articulate how my extensive experience and professional values align seamlessly with your organization's mission to save lives, alleviate suffering, and facilitate sustainable development. Having closely followed MAG's impactful work in addressing the causes and consequences of armed violence, I am convinced that my nearly a decade of experience in complex humanitarian contexts, particularly in emergency response and community-focused development, makes me a strong fit for your team.
+                I am a humanitarian finance and operations professional with extensive experience supporting emergency response, donor compliance, budget management and programme implementation in complex contexts. My career has combined field-based operational leadership with strong financial oversight, working across the Red Cross Movement and international NGOs.
             </p>
             <p class="mb-4 leading-relaxed">
-                My career has been dedicated to enabling people to live with dignity and freedom from fear, a core tenet of MAG’s mission. As a Projects Manager for the Austrian Red Cross in Kyiv, and through multiple deployments as a Surge Finance Delegate for the German Red Cross in Ukraine, I have gained firsthand experience in environments shaped by armed conflict, understanding the critical need for immediate and sustainable humanitarian action. My work in implementing Cash and Vouchers Assistance (CVA) programs for Ukrainian refugees in Poland directly contributed to alleviating suffering and providing dignity amidst displacement. This frontline experience has instilled a deep appreciation for the comprehensive approach required to address the consequences of armed violence, from direct aid to fostering long-term recovery.
+                My recent work in Ukraine and Poland has strengthened my ability to operate in fast-moving emergency environments, supporting financial control, budget follow-up, CVA implementation, partner coordination and field-level decision-making. I have worked closely with National Societies, finance teams, programme managers and operational stakeholders to ensure that resources are used effectively, transparently and in line with donor requirements.
             </p>
             <p class="mb-4 leading-relaxed">
                 Furthermore, my professional journey reflects a strong commitment to working within communities and strengthening local capacities, mirroring MAG's collaborative approach. As an Economic Security Delegate for the Spanish Red Cross in Port Sudan, Sudan, and for ONG Rescate Internacional in Dire Dawa, Ethiopia, I gained extensive experience in community-based interventions, livelihood programming, and, crucially, in "organizing capacity building sessions for the local partners and beneficiaries." This direct engagement in training and technical support aligns with MAG's educational programs aimed at promoting safety and building resilience within affected communities. My leadership roles, including acting as Head of Mission and Field Coordinator in challenging contexts like Sudan and Syria, underscore my ability to manage and empower teams while ensuring operational effectiveness and security.
@@ -378,9 +402,9 @@
         // CV Data
         const experienceData = [
             { region: 'Middle East', dates: '26/03/2025-11/04/2025', role: 'Surge Finance Delegate', org: 'German Red Cross', location: 'Ramallah, Palestinian Territories', details: ['Budget follow up, ensuring all expenses have statements of payment for donor reports.', 'Daily follow up of the projects financial evolution.'] },
-            { region: 'Europe', dates: '08/04/2024-31/01/2025', role: 'Projects Manager', org: 'Austrian Red Cross', location: 'Kyiv, Ukraine', details: ['Led financial activities in the field, monitoring program finances and indicators.', 'Developed and implemented planning strategies to achieve program goals.', 'Collaborated with Ukraine Red Cross Finance team for daily operations.', 'Provided inputs for new proposals to support program growth.', 'Cash and Vouchers Assistance referent.'] },
-            { region: 'Europe', dates: '14/11/2023-01/04/2024', role: 'Surge Finance Delegate', org: 'German Red Cross', location: 'Kyiv, Ukraine', details: ['Budget follow up, ensuring all expenses have statements of payment for donor reports.', 'Daily follow up of the projects financial evolution.'] },
-            { region: 'Europe', dates: '01/04/2022-31/03/2023', role: 'Cash and Vouchers Assistance Delegate', org: 'German Red Cross', location: 'Lublin, Poland', details: ['Implementation of a CVA programme in Lublin Region for the Ukrainian Emergency.', 'Procurement and set up of the Red Rose CVA platform.', 'Training and coordinating volunteers.', 'Close coordination with Polish Red Cross, IFRC, and local authorities.'] },
+            { region: 'Europe', dates: '08/04/2024-31/01/2025', role: 'Projects Manager', org: 'Austrian Red Cross', location: 'Kyiv, Ukraine', details: ['Led financial and operational follow-up of humanitarian programmes in Ukraine under Red Cross procedures.', 'Supported budget monitoring, forecasting, donor compliance and financial reporting.', 'Coordinated closely with Ukraine Red Cross Society branches and finance departments.', 'Provided technical inputs for proposal development and programme planning.', 'Supported Cash & Voucher Assistance activities and operational implementation.', 'Contributed to strategic decision-making through programme and financial analysis.'] },
+            { region: 'Europe', dates: '14/11/2023-01/04/2024', role: 'Surge Finance Delegate', org: 'German Red Cross', location: 'Kyiv, Ukraine', details: ['Supported financial management of humanitarian operations in Ukraine during emergency response activities.', 'Conducted budget follow-up, expenditure verification and donor compliance monitoring.', 'Ensured availability and quality of supporting documentation for donor reporting and audits.', 'Supported treasury management and daily financial operations in coordination with local teams.', 'Provided financial analysis and operational support to programme management.'] },
+            { region: 'Europe', dates: '01/04/2022-31/03/2023', role: 'Cash & Voucher Assistance Delegate', org: 'German Red Cross', location: 'Lublin, Poland', details: ['Supported implementation of Cash & Voucher Assistance programmes for the Ukraine emergency response.', 'Led procurement and operational deployment of the RedRose CVA platform.', 'Coordinated volunteers and supported operational delivery in collaboration with Polish Red Cross.', 'Ensured compliance with humanitarian standards and donor requirements.', 'Maintained close coordination with IFRC, local authorities and humanitarian stakeholders.'] },
             { region: 'Latin America', dates: '15/05/2021-31/12/2021', role: 'Country Finance Coordinator', org: 'INTERSOS', location: 'San Cristobal, Venezuela', details: ['Daily follow up of the projects financial evolution.', 'Management of bank accounts and petty cash reconciliation.', 'Budget design and follow up.', 'Responsible for all Human Resources and Administrative issues.'] },
             { region: 'Middle East', dates: '28/10/2018-16/07/2019', role: 'Country Administrator', org: 'Doctors of the World (MdM)', location: 'Amuda, Syria', details: ['Daily follow up of the projects financial evolution.', 'Budget follow up.', 'Responsible for all Human Resources and Administrative issues.', 'Acting Field Coordinator from April to May 2019.'] },
             { region: 'Africa', dates: '30/05/2016-24/10/2018', role: 'Food Security Delegate', org: 'Spanish Red Cross', location: 'Port Sudan, Sudan', details: ['Daily monitoring of programme activities following EU procedures.', 'Budget control, planning, and reporting.', 'Financial and technical reporting to SRC and EU Delegation.', 'Developed sustainable partnerships and provided capacity building for local partners.', 'Acting Head of Mission from April to November 2018.'] },
@@ -394,7 +418,7 @@
         const timelineContainer = document.getElementById('experience-timeline');
         const filterButtons = document.querySelectorAll('.filter-btn');
         let activeFilter = 'all';
-        
+
         const renderTimeline = (filter) => {
             // Add fade-out class to existing items before clearing
             Array.from(timelineContainer.children).forEach(child => {
@@ -408,7 +432,7 @@
             setTimeout(() => {
                 timelineContainer.innerHTML = '<div class="absolute left-1/2 -ml-0.5 w-1 bg-primary-red h-full"></div>'; // Re-add the vertical line
                 const filteredData = filter === 'all' ? experienceData : experienceData.filter(item => item.region === filter);
-                
+
                 // Sort by start date (descending)
                 filteredData.sort((a, b) => {
                     const dateA = new Date(a.dates.split('-')[0].split('/').reverse().join('-')); // Correct parsing DD/MM/YYYY
@@ -448,7 +472,7 @@
                 });
                 button.classList.add('bg-primary-red', 'text-white');
                 button.classList.remove('bg-white', 'text-primary-red', 'border', 'border-primary-red', 'hover:bg-primary-red', 'hover:text-white');
-                
+
                 activeFilter = button.dataset.region;
                 renderTimeline(activeFilter);
             });
@@ -469,7 +493,7 @@
                     data: [6, 5, 3, 2], // C2=6, C1=5, B1=3, A2=2 (Arabic)
                     backgroundColor: [
                         '#E03131', /* Primary Red */
-                        '#E03131', 
+                        '#E03131',
                         '#F4A3A3', /* Lighter Red */
                         '#FADCDC'  /* Even lighter Red */
                     ],
